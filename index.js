@@ -16,15 +16,27 @@ client.once(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isChatInputCommand()) return;
+
+    if (interaction.commandName === 'ping') {
+        await interaction.reply('pong');
+    }
+});
+
 client.on('messageCreate', async (message) => {
 
     // Ignore bots
     if (message.author.bot) return;
 
-    // Auto delete every message after 5 seconds
-    setTimeout(() => {
-        message.delete().catch(() => {});
-    }, 5000);
+    // ONLY auto delete in your stream/self promo channel
+    if (message.channel.id === '1227906421937672192') {
+
+        setTimeout(() => {
+            message.delete().catch(() => {});
+        }, 86400000); // 24 hours
+
+    }
 
 });
 
