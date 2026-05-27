@@ -1,19 +1,31 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { 
+    Client, 
+    GatewayIntentBits, 
+    Events 
+} = require('discord.js');
 
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds]
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
+    ]
 });
 
-client.once('ready', () => {
+client.once(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.on('interactionCreate', async interaction => {
-    if (!interaction.isChatInputCommand()) return;
+client.on('messageCreate', async (message) => {
 
-    if (interaction.commandName === 'ping') {
-        await interaction.reply('pong');
-    }
+    // Ignore bots
+    if (message.author.bot) return;
+
+    // Auto delete every message after 5 seconds
+    setTimeout(() => {
+        message.delete().catch(() => {});
+    }, 5000);
+
 });
 
 client.login(process.env.token);
