@@ -6,14 +6,14 @@ const commands = [
         .setDescription('Replies with pong')
 ].map(command => command.toJSON());
 
-const rest = new REST({ version: '10' }).setToken('YOUR_BOT_TOKEN');
+const rest = new REST({ version: '10' }).setToken(process.env.token);
 
 (async () => {
     try {
         console.log('Registering slash commands...');
 
         await rest.put(
-            Routes.applicationCommands('YOUR_CLIENT_ID'),
+            Routes.applicationCommands('1509034461226995882'),
             { body: commands }
         );
 
