@@ -41,3 +41,5 @@ client.on('messageCreate', async (message) => {
 });
 
 client.login(process.env.token);
+
+added auto delete
